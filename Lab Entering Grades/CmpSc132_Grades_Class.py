@@ -35,9 +35,14 @@ class CmpS132Grades():
         while gradeInput != "-1":
             gradeInput = int(input("\nEnter a grade: "))
             __total_grades.append(gradeInput)
-            # Check if the grade is valid
+            # Check if the grade is valid if so put it into __total_valid_grades
             if gradeInput >= 0 and gradeInput <= 100:
-                
+                __total_valid_grades.append(gradeInput)
+            else:
+                __total_invalid_grades.append(gradeInput)
+                # Print error message
+                print("ERROR: Grade Invalid")
+        return
 
 
     pass
