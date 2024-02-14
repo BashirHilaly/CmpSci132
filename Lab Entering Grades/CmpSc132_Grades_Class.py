@@ -45,11 +45,33 @@ class CmpS132Grades():
                 self.__total_invalid_grades.append(gradeInput)
                 # Print error message
                 print("\nERROR: Grade Invalid. Please try again")
+        
+        # Update other private fields with new data
+        # Find lowest valid grade
+        currentLowest = 100
+        for i in self.__total_valid_grades:
+            if i < currentLowest:
+                currentLowest = i
+        self.__lowest_valid_grade = currentLowest
+        # Find highest valid grade
+        currentHighest = 0
+        for i in self.__total_valid_grades:
+            if i > currentHighest:
+                currentHighest = i
+        self.__highest_valid_grade = currentHighest
+
+        # Average
+        self.__avg_valid_grades = sum(self.__total_valid_grades)/len(self.__total_grades)
         return
     
     # ONLY FOR DEBUGGING, DELETE WHEN TURNING IN
     def getAllGrades(self):
         return self.__total_grades
+    
+    def GetLowestScore():
+        return self.__lowest_valid_grade
+    def GetHighestScore():
+        return self.__highest_valid_grade
 
     # Return a string of the data in a readable string
     def __str__(self):
