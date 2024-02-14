@@ -15,5 +15,16 @@ class CmpS132Grades():
     __total_valid_grades = []
     # Total of all Invalid grade entered
     __total_invalid_grades = []
+    # Lowest Valid Grade entered
+    __lowest_valid_grade = None
+    # Highest Valid Grade entered
+    __highest_valid_grade = None
+    # Average of all valid grades entered
+    __avg_valid_grades = None
+    # The Grade points for this class. Assume all grades are for a 3-credit class.
+    __grade_points = []
+    # The Grade Letter for this class
+    __letter_grade = None
+
 
     pass
