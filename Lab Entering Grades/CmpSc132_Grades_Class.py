@@ -26,5 +26,18 @@ class CmpS132Grades():
     # The Grade Letter for this class
     __letter_grade = None
 
+    def __init__(self):
+        print("\nObject has been created")
+    
+    # Will only return once user enters "-1"
+    def EnterGrades():
+        gradeInput = None
+        while gradeInput != "-1":
+            gradeInput = int(input("\nEnter a grade: "))
+            __total_grades.append(gradeInput)
+            # Check if the grade is valid
+            if gradeInput >= 0 and gradeInput <= 100:
+                
+
 
     pass
