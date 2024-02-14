@@ -30,19 +30,46 @@ class CmpS132Grades():
         print("\nObject has been created")
     
     # Will only return once user enters "-1"
-    def EnterGrades():
+    def EnterGrades(self):
         gradeInput = None
-        while gradeInput != "-1":
+        while gradeInput != -1:
             gradeInput = int(input("\nEnter a grade: "))
-            __total_grades.append(gradeInput)
+            # End inputs
+            if gradeInput == -1:
+                continue
+            self.__total_grades.append(gradeInput)
             # Check if the grade is valid if so put it into __total_valid_grades
             if gradeInput >= 0 and gradeInput <= 100:
-                __total_valid_grades.append(gradeInput)
+                self.__total_valid_grades.append(gradeInput)
             else:
-                __total_invalid_grades.append(gradeInput)
+                self.__total_invalid_grades.append(gradeInput)
                 # Print error message
-                print("ERROR: Grade Invalid")
+                print("\nERROR: Grade Invalid. Please try again")
         return
+    
+    # ONLY FOR DEBUGGING, DELETE WHEN TURNING IN
+    def getAllGrades(self):
+        return self.__total_grades
 
+    # Return a string of the data in a readable string
+    def __str__(self):
+        
+        totalGrades = f'Total Grades: {self.__total_grades}\n'
+        totalValidGrades = f'Total Valid Grades: {self.__total_valid_grades}\n'
+        totalInvalidGrades = f'Total Invalid Grades: {self.__total_invalid_grades}\n'
+        lowestValidGrade = f'Lowest Valid Grade: {self.__lowest_valid_grade}\n'
+        highestValidGrade = f'Highest Valid Grade: {self.__highest_valid_grade}\n'
+        averageValidGrades = f'Average Valid Grades: {self.__avg_valid_grades}\n'
+        gradePoints = f'Grade Points: {self.__grade_points}\n'
+        letterGrade = f'Letter Grade: {self.__letter_grade}\n'
 
-    pass
+        
+        return ("\n-----DATA----\n"
+         + totalGrades 
+         + totalValidGrades 
+         + totalInvalidGrades 
+         + lowestValidGrade 
+         + highestValidGrade 
+         + averageValidGrades
+         + gradePoints
+         + letterGrade)

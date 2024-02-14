@@ -6,10 +6,13 @@
 ----------------------------------------------------
 """
 
-from cmpsc132_grades_class import CmpS132Grades 
+from CmpSc132_Grades_Class import CmpS132Grades 
 
 if __name__ == '__main__':
 
     grades = CmpS132Grades()
 
     grades.EnterGrades()
+
+    print(grades.getAllGrades())
+    print(grades)
