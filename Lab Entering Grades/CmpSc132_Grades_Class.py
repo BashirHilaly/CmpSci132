@@ -8,7 +8,6 @@
 
 class CmpS132Grades():
 
-# Private fields... I think ------
     # Total of all grades entered
     __total_grades = []
     # Total of all Valid grades entered
@@ -25,6 +24,18 @@ class CmpS132Grades():
     __grade_points = []
     # The Grade Letter for this class
     __letter_grade = None
+    # Grading Scheme [ numericGradeRange, letterGrade, gradePoints ]
+    __grading_scheme = [
+        [ (100, 93), 'A', 4.00 ],
+        [ (92, 90), 'A-', 3.67 ],
+        [ (89, 87), 'B+', 3.33 ],
+        [ (86, 83), 'B', 3.00 ],
+        [ (82, 80), 'B-', 2.67 ],
+        [ (79, 76), 'C+', 2.33 ],
+        [ (75, 70), 'C', 2.00 ],
+        [ (69, 60), 'D', 1.00 ],
+        [ (59, 0), 'F', 0 ]
+    ]
 
     def __init__(self):
         print("\nObject has been created")
