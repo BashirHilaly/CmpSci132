@@ -6,6 +6,7 @@
 ----------------------------------------------------
 """
 
+
 class CmpS132Grades():
 
     # Total of all grades entered
@@ -22,8 +23,10 @@ class CmpS132Grades():
     __avg_valid_grades = None
     # The Grade points for this class. Assume all grades are for a 3-credit class.
     __grade_points = []
-    # The Grade Letter for this class
+    # The Grade Letter for every grade
     __letter_grades = []
+    # Letter grade for the class
+    __letter_grade = None
     # Grading Scheme [ numericGradeRange, letterGrade, gradePointValue ]
     __grading_scheme = [
         [ (100, 93), 'A', 4.00 ],
@@ -58,11 +61,12 @@ class CmpS132Grades():
                     gradeRange = i[0]
                     letterGrade = i[1]
                     gradePointValue = i[2]
-                    if gradeInput in range(gradeRange[1], gradeRange[0]):
+                    roundedGrade = round(gradeInput)
+                    if roundedGrade in range(gradeRange[1], gradeRange[0]+1):
                         # Add grade points
                         self.__grade_points.append(gradePointValue * 3.00)
                         self.__letter_grades.append(letterGrade)
-                        print(f"\nYour grade is within: {gradeRange}")
+                        #print(f"\nYour grade is within: {gradeRange}")
             else:
                 self.__total_invalid_grades.append(gradeInput)
                 # Print error message
@@ -83,15 +87,17 @@ class CmpS132Grades():
         self.__highest_valid_grade = currentHighest
 
 
-
+    def GetAverage(self):
         # Average
-        self.__avg_valid_grades = sum(self.__total_valid_grades)/len(self.__total_grades)
-        return
+        self.__avg_valid_grades = sum(self.__total_valid_grades)/len(self.__total_valid_grades)
+        return self.__avg_valid_grades
     
+    """
     # ONLY FOR DEBUGGING, DELETE WHEN TURNING IN
     def getAllGrades(self):
         return self.__total_grades
-    
+    """
+
     def GetLowestScore(self):
         return self.__lowest_valid_grade
     def GetHighestScore(self):
@@ -100,6 +106,15 @@ class CmpS132Grades():
         return sum(self.__grade_points)/(len(self.__total_valid_grades)*3.00)
     def GetGradePoints(self):
         return self.__grade_points
+    def GetLetterGrade(self):
+        # loop through grading scheme and check which item the grade fits in with
+        avgRounded = round(self.GetAverage())
+        for i in self.__grading_scheme:
+            gradeRange = i[0]
+            letterGrade = i[1]
+            if avgRounded in range(gradeRange[1], gradeRange[0]+1):
+                self.__letter_grade = letterGrade
+        return self.__letter_grade
 
     # Return a string of the data in a readable string
     def __str__(self):
@@ -109,9 +124,11 @@ class CmpS132Grades():
         totalInvalidGrades = f'Total Invalid Grades: {self.__total_invalid_grades}\n'
         lowestValidGrade = f'Lowest Valid Grade: {self.__lowest_valid_grade}\n'
         highestValidGrade = f'Highest Valid Grade: {self.__highest_valid_grade}\n'
-        averageValidGrades = f'Average Valid Grades: {self.__avg_valid_grades}\n'
+        averageValidGrades = f'Average Valid Grades: {self.GetAverage()}\n'
         gradePoints = f'Grade Points: {self.__grade_points}\n'
-        letterGrades = f'Letter Grade: {self.__letter_grades}\n'
+        letterGrades = f'Letter Grades: {self.__letter_grades}\n'
+        letterGrade = f'Letter Grade: {self.GetLetterGrade()}\n'
+        gpa = f'GPA: {self.GetGPA()}\n'
 
         
         return ("\n-----DATA----\n"
@@ -122,4 +139,6 @@ class CmpS132Grades():
          + highestValidGrade 
          + averageValidGrades
          + gradePoints
-         + letterGrades)
+         + letterGrades
+         + letterGrade
+         + gpa)

@@ -14,5 +14,4 @@ if __name__ == '__main__':
 
     grades.EnterGrades()
 
-    print(grades.getAllGrades())
     print(grades)
