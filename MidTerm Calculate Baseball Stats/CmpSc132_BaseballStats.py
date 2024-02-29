@@ -5,7 +5,7 @@ class Player():
         self.rawStats = stats
 
 def removeNewLineChar(string):
-    return string.strip()
+    return string.replace('\n', '')
 
 if __name__ == "__main__":
     
@@ -16,4 +16,19 @@ if __name__ == "__main__":
     with open(file) as f:
         lines = f.readlines()
         f.close()
+
+    # Create player object
+    name = None
+    rawStats = []
+
+    for i in range(len(lines)):
+        # If its the first line, it is the name
+        if lines[i] == lines[0]:
+            name = removeNewLineChar(lines[i])
+        else:
+            # Check if
+            rawStats.append(removeNewLineChar(lines[i]))
+    
+    print(name)
+    print(rawStats)
         
