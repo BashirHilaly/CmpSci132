@@ -1,30 +1,41 @@
-class Player():
-
-    def __init__(self, playerName, stats):
-        self.playerName = playerName
-        self.rawStats = stats
-
 # Stats dictionary
 AtBats = 0
 Hits = 1
-Double = 2
+Doubles = 2
 Triples = 3
 Homeruns = 4
 Walks = 5
 
+
+class Player():
+
+    def __init__(self, playerName, stats):
+        self.playerName = playerName
+        self.stats = stats
+
+        # Totals
+        for statLine in stats:
+            self.atBats = statLine[AtBats]
+            self.hits = statLine[Hits]
+            self.doubles = statLine[Doubles]
+            self.triples = statLine[Triples]
+            self.homeruns = statLine[Homeruns]
+            self.walks = statLine[Walks]
+
 def validateStats(stats):
     # Return true if stats are valid
 
-    # All stats must have single digit
-    for i in stats:
-        if int(i) > 9:
+    for statLine in stats:
+        # All stats must have single digit
+        for i in statLine:
+            if i > 9:
+                return False
+        # number of Hits cannot be exceeded the # of At Bats.
+        if statLine[Hits] > statLine[AtBats]:
             return False
-    # number of Hits cannot be exceeded the # of At Bats.
-    if int(stats[Hits]) > int(stats[AtBats]):
-        return False
-    # Doubles, Triples, and Home runs cannot exceed # of Hits.
-    if (int(stats[Doubles]) + int(stats[Triples]) + int(stats[Homeruns])) > int(stats[Hits]):
-        return False
+        # Doubles, Triples, and Home runs cannot exceed # of Hits.
+        if (statLine[Doubles] + statLine[Triples] + statLine[Homeruns]) > statLine[Hits]:
+            return False
 
     return True
 
@@ -69,6 +80,9 @@ if __name__ == "__main__":
             statLine[i] = int(statLine[i])
     
     
-    # First validate statistics
-    for stat in cleanStats:
-        print('\nIs stat valid?: ' + validateStats(stat))
+    # First validate statistics. If invalid display error and exit the program
+    if not validateStats(cleanStats):
+        print("Error: Stats failed validation tests")
+    else:
+        player = Player(name, cleanStats)
+
