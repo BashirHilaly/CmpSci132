@@ -15,22 +15,31 @@ class Player():
         self.stats = stats
 
         # Totals
+        self.atBats = 0
+        self.hits = 0
+        self.doubles = 0
+        self.triples = 0
+        self.homeruns = 0
+        self.walks = 0
+        self.singles = 0
         for statLine in stats:
-            self.atBats = statLine[AtBats]
-            self.hits = statLine[Hits]
-            self.doubles = statLine[Doubles]
-            self.triples = statLine[Triples]
-            self.homeruns = statLine[Homeruns]
-            self.walks = statLine[Walks]
+            self.atBats += statLine[AtBats]
+            self.hits += statLine[Hits]
+            self.doubles += statLine[Doubles]
+            self.triples += statLine[Triples]
+            self.homeruns += statLine[Homeruns]
+            self.walks += statLine[Walks]
         
-        self.singles = self.hits - (self.homeruns + self.triples + self.doubles)
+        self.singles += self.hits - (self.homeruns + self.triples + self.doubles)
     
-    def getBattingAverage():
+    def getBattingAverage(self):
         return math.trunc((self.hits / self.atBats) * 1000)
-    
 
-    def getSluggingPCT():
-        return math.trunc( ((self.homeruns * 4) + (self.triples * 3) + (self.doubles * 2) + self.singles) / self.atBats )
+    def getSluggingPCT(self):
+        return ((self.homeruns * 4) + (self.triples * 3) + (self.doubles * 2) + self.singles) / self.atBats
+    
+    def getName(self):
+        return self.playerName
 
 def validateStats(stats):
     # Return true if stats are valid
@@ -95,4 +104,12 @@ if __name__ == "__main__":
         print("Error: Stats failed validation tests")
     else:
         player = Player(name, cleanStats)
+
+        print(player.singles)
+        print(player.doubles)
+        print(player.triples)
+        print(player.homeruns)
+        print(player.atBats)
+
+        print(f'\n{player.getName()} stats:\n\t- Batting Average: {player.getBattingAverage()}\n\t- Slugging Percentage: {player.getSluggingPCT()}')
 
