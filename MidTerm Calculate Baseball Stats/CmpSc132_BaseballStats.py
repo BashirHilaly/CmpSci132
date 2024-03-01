@@ -40,6 +40,22 @@ class Player():
     
     def getName(self):
         return self.playerName
+    
+    def toString(self):
+        string = f"{self.playerName}'s Stats:\n"
+        string += f"\t- Batting Average: {self.getBattingAverage()}\n"
+        string += f"\t- Slugging Percentage: {self.getSluggingPCT()}"
+
+        string += f"\nTotals:\n"
+        string += f"\tAt Bats: {self.atBats}\n"
+        string += f"\tHits: {self.hits}\n"
+        string += f"\tDoubles: {self.doubles}\n"
+        string += f"\tTriples: {self.triples}\n"
+        string += f"\tHomeruns: {self.homeruns}\n"
+        string += f"\tWalks: {self.walks}\n"
+        string += f"\tSingles: {self.singles}\n"
+        
+        return string
 
 def validateStats(stats):
     # Return true if stats are valid
@@ -105,8 +121,8 @@ if __name__ == "__main__":
         player = Player(name, cleanStats)
 
         f = open(filePath+f"{player.getName()}'s_Lab_Output.txt", "w")
-        f.write(f'{player.getName()} stats:\n\t- Batting Average: {player.getBattingAverage()}\n\t- Slugging Percentage: {player.getSluggingPCT()}')
+        f.write(player.toString())
         f.close()
 
-        print(f'{player.getName()} stats:\n\t- Batting Average: {player.getBattingAverage()}\n\t- Slugging Percentage: {player.getSluggingPCT()}')
+        print(player.toString())
 
