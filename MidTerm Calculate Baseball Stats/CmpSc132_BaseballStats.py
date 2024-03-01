@@ -64,11 +64,12 @@ def removeNewLineChar(string):
 
 if __name__ == "__main__":
     
-    file = "D:/School/CMPSCI 132/MidTerm Calculate Baseball Stats/Lab_BaseballStats.txt"
+    filePath = "D:/School/CMPSCI 132/MidTerm Calculate Baseball Stats/"
+    fileName = "Lab_BaseballStats.txt"
 
     # Open text file and read contents
     lines = []
-    with open(file) as f:
+    with open(filePath+fileName) as f:
         lines = f.readlines()
         f.close()
 
@@ -85,8 +86,6 @@ if __name__ == "__main__":
             if removeNewLineChar(lines[i]) != '':
                 rawStats.append(removeNewLineChar(lines[i]))
 
-    print(name)
-    print(rawStats)
 
     cleanStats = []
     # Convert list of strings into list of lists
@@ -105,11 +104,9 @@ if __name__ == "__main__":
     else:
         player = Player(name, cleanStats)
 
-        print(player.singles)
-        print(player.doubles)
-        print(player.triples)
-        print(player.homeruns)
-        print(player.atBats)
+        f = open(filePath+f"{player.getName()}'s_Lab_Output.txt", "w")
+        f.write(f'{player.getName()} stats:\n\t- Batting Average: {player.getBattingAverage()}\n\t- Slugging Percentage: {player.getSluggingPCT()}')
+        f.close()
 
-        print(f'\n{player.getName()} stats:\n\t- Batting Average: {player.getBattingAverage()}\n\t- Slugging Percentage: {player.getSluggingPCT()}')
+        print(f'{player.getName()} stats:\n\t- Batting Average: {player.getBattingAverage()}\n\t- Slugging Percentage: {player.getSluggingPCT()}')
 
