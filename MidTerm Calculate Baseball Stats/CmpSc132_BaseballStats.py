@@ -63,9 +63,12 @@ if __name__ == "__main__":
     for stat in rawStats:
         cleanStats.append(stat.split())
 
-    print(cleanStats)
+    # Change from strings to ints
+    for statLine in cleanStats:
+        for i in range(len(statLine)):
+            statLine[i] = int(statLine[i])
+    
     
     # First validate statistics
-    for stat in rawStats:
+    for stat in cleanStats:
         print('\nIs stat valid?: ' + validateStats(stat))
-        
