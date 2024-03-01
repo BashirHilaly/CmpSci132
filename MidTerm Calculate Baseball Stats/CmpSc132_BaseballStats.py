@@ -1,3 +1,4 @@
+import math
 # Stats dictionary
 AtBats = 0
 Hits = 1
@@ -21,6 +22,15 @@ class Player():
             self.triples = statLine[Triples]
             self.homeruns = statLine[Homeruns]
             self.walks = statLine[Walks]
+        
+        self.singles = self.hits - (self.homeruns + self.triples + self.doubles)
+    
+    def getBattingAverage():
+        return math.trunc((self.hits / self.atBats) * 1000)
+    
+
+    def getSluggingPCT():
+        return math.trunc( ((self.homeruns * 4) + (self.triples * 3) + (self.doubles * 2) + self.singles) / self.atBats )
 
 def validateStats(stats):
     # Return true if stats are valid
