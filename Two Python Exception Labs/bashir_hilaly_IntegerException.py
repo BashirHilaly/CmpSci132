@@ -1,7 +1,7 @@
 """
 ----------------------------------------------------
 -- CMPSC_132, Spring 2024, Bashir Hilaly
--- LLab 1 – Detecting integer exception
+-- Lab 1 – Detecting integer exception
 ----------------------------------------------------
 """
 
