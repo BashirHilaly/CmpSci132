@@ -17,10 +17,7 @@ samplePuzzle = [ [ 7, 8, 9, 1, 2, 3, 4, 5, 6],
             [ 6, 7, 8, 9, 1, 2, 3, 4, 5],
             [ 9, 1, 2, 3, 4, 5, 6, 7, 8] ]
 
-def validatePuzzle(puzzle):
-    isValid = True
-    invalidMessage = ''
-
+def validateRows(puzzle):
     # Check if all rows are valid
     for row in puzzle:
         validNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -28,14 +25,12 @@ def validatePuzzle(puzzle):
             if number in validNumbers:
                 validNumbers.remove(number)
         if validNumbers != []:
-            isValid = False
-            invalidMessage = 'Invalid Row!'
+            return False
         # print(validNumbers)
-
-    if not isValid:
-        print(invalidMessage)
-        return invalidMessage
+    return True
     
+
+def validateColumns():
     # Check if all columns are valid
     pos = 0
     for i in range(9):
@@ -48,9 +43,37 @@ def validatePuzzle(puzzle):
                 validNumbers.remove(number)
         if validNumbers != []:
             # Find a way to end the loop here
-            isValid = False
-            invalidMessage = 'Invalid Column'
+            return False
         pos += 1
+    return True
+
+def validateSquares(puzzle):
+    squares = []
+    square = []
+    for row in range(0, 3):
+        print('First elements: ', puzzle[row][:3])
+        square.append(puzzle[row][:3])
+    squares.append(square)
+    
+    print(printPuzzle(square))
+
+    return square
+
+def validatePuzzle(puzzle):
+    isValid = True
+    invalidMessage = ''
+
+    # Check if all rows are valid
+    isValid = validateRows(puzzle)
+    invalidMessage = 'Invalid Row(s)'
+
+    if not isValid:
+        print(invalidMessage)
+        return invalidMessage
+    
+    # Check if all columns are valid
+    isValid = validateColumns(puzzle)
+    invalidMessage = 'Invalid Column(s)'
     
     if not isValid:
         print(invalidMessage)
@@ -78,7 +101,7 @@ def printPuzzle(puzzle):
         pos = 0
         for number in row:
             pos += 1
-            if pos != 9:
+            if pos != len(puzzle):
                 stringToPrint += f'{number}, '
             else:
                 stringToPrint += f'{number}'
@@ -88,10 +111,11 @@ def printPuzzle(puzzle):
     print(stringToPrint)
 
 if __name__ == '__main__':
-    puzzle = generateRandomPuzzle()
-    #puzzle = samplePuzzle
+    #puzzle = generateRandomPuzzle()
+    puzzle = samplePuzzle
 
     printPuzzle(puzzle)
 
-    print('\n\n')
-    validatePuzzle(puzzle)
+    print('\n')
+    firstSquare = validateSquares(puzzle)
+    print('First Square:', printPuzzle(firstSquare))
