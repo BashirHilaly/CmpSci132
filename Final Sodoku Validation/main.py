@@ -17,6 +17,7 @@ samplePuzzle = [ [ 7, 8, 9, 1, 2, 3, 4, 5, 6],
             [ 6, 7, 8, 9, 1, 2, 3, 4, 5],
             [ 9, 1, 2, 3, 4, 5, 6, 7, 8] ]
 
+# Validates the rows in the puzzle
 def validateRows(puzzle):
     # Check if all rows are valid
     pos = 0
@@ -26,12 +27,12 @@ def validateRows(puzzle):
             if number in validNumbers:
                 validNumbers.remove(number)
         if validNumbers != []:
-            return { 'Status': False, 'Reason': f'The Following Numbers Not Found: {validNumbers} in Row {pos+1}' }
-        # print(validNumbers)
+            return { 'Status': False, 'Reason': f'The Following Numbers Not Found: {validNumbers} in Row {pos + 1}' }
         pos += 1
     
     return { 'Status': True, 'Reason': None }   
 
+# Validates the columns in the puzzle
 def validateColumns(puzzle):
     # Check if all columns are valid
     pos = 0
@@ -45,11 +46,12 @@ def validateColumns(puzzle):
                 validNumbers.remove(number)
         if validNumbers != []:
             # Find a way to end the loop here
-            return { 'Status': False, 'Reason': f'The Following Numbers Not Found: {validNumbers} in Column {pos+1}' }
+            return { 'Status': False, 'Reason': f'The Following Numbers Not Found: {validNumbers} in Column {pos + 1}' }
         pos += 1
     
-    return True
+    return { 'Status': True, 'Reason': None } 
 
+# Validates the 3x3 squares in the puzzle
 def validateSquares(puzzle):
     squares = []
     square = []
@@ -62,13 +64,12 @@ def validateSquares(puzzle):
         pos = -3
         for i in range(0, 3):
             square = []
-            for row in range(rowPos+3, rowPos+6):
+            for row in range(rowPos + 3, rowPos + 6):
                 # print('First elements: ', puzzle[row][:3])
-                square.append(puzzle[row][pos+3:pos+6])
+                square.append(puzzle[row][pos + 3:pos + 6])
             squares.append(square)
             pos += 3
         rowPos += 3
-            # print(printPuzzle(square), '\n')
 
     # Validate all squares
 
@@ -84,47 +85,56 @@ def validateSquares(puzzle):
             if num in validNumbers:
                 validNumbers.remove(num)
         if validNumbers != []:
-            return { 'Status': False, 'Reason': f'The Following Numbers Not Found: {validNumbers} in Square {pos+1}' }
+            return { 'Status': False, 'Reason': f'The Following Numbers Not Found: {validNumbers} in Square {pos + 1}' }
         pos += 1
 
-    return True
+    return { 'Status': True, 'Reason': None } 
 
+# Validates the entire puzzle (Dependent on above functions)
 def validatePuzzle(puzzle):
-    isValid = True
     puzzleValid = True
+    # Allow print?
+    printVar = True
 
     # Check if all rows are valid
     rowValid = validateRows(puzzle)
 
     if not rowValid['Status']:
         puzzleValid = False
-        print('Invalid Row(s)')
-        print('\tReason: ', rowValid['Reason'])
+        if printVar:
+            print('Invalid Row(s)')
+            print('\tReason: ', rowValid['Reason'])
     else:
-        print('All Rows Valid')
+        if printVar:
+            print('All Rows Valid')
     
     # Check if all columns are valid
     colValid = validateColumns(puzzle)
     
     if not colValid['Status']:
         puzzleValid = False
-        print('Invalid Column(s)')
-        print('\tReason: ', colValid['Reason'])
+        if printVar:
+            print('Invalid Column(s)')
+            print('\tReason: ', colValid['Reason'])
     else:
-        print('All Columns Valid')
+        if printVar:
+            print('All Columns Valid')
     
     # Check if all squares are valid
     squaresValid = validateSquares(puzzle)
 
     if not squaresValid['Status']:
         puzzleValid = False
-        print('Invalid Square(s)')
-        print('\tReason: ', squaresValid['Reason'])
+        if printVar:
+            print('Invalid Square(s)')
+            print('\tReason: ', squaresValid['Reason'])
     else:
-        print('All Squares Valid')
+        if printVar:
+            print('All Squares Valid')
     
     return puzzleValid
 
+# Generates a puzzle with random values
 def generateRandomPuzzle():
     createdPuzzle = []
 
@@ -134,10 +144,10 @@ def generateRandomPuzzle():
             row.append(random.randrange(1, 10))
         createdPuzzle.append(row)
 
-    # print(createdPuzzle)
 
     return createdPuzzle
 
+# Prints puzzle in a clean and readable format
 def printPuzzle(puzzle):
     stringToPrint = ""
 
@@ -153,12 +163,25 @@ def printPuzzle(puzzle):
         
         stringToPrint += '\n'
     
-    print(stringToPrint)
+    print(stringToPrint, '\n')
+
+# Keeps randomly generating puzzles until a perfect puzzle is generated. NOTE: It will take hundreds and millions of iterations if not more
+def fun():
+    iterations = 0
+    puzzleTrue = False
+    while not puzzleTrue:
+        iterations += 1
+        if iterations % 300000 == 0:
+            print(iterations)
+        puzzle = generateRandomPuzzle()
+        puzzleTrue = validatePuzzle(puzzle)
+    
+    print(f'On {iterations}, we have generated a perfectly valid sodoku puzzle')
+
 
 if __name__ == '__main__':
-    # puzzle = generateRandomPuzzle()
     puzzle = samplePuzzle
 
     printPuzzle(puzzle)
 
-    print(validatePuzzle(puzzle))
+    validatePuzzle(puzzle)
